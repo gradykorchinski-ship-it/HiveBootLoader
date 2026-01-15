@@ -11,7 +11,8 @@
 ## 🚀 Features
 
 - **🔍 Automatic OS Detection** - Scans and displays all bootable partitions
-- **🖥️ Beautiful UI** - GRUB-style menu with keyboard navigation
+- **� GPT & MBR Support** - Works with modern GPT and legacy MBR partition tables
+- **�🖥️ Beautiful UI** - GRUB-style menu with keyboard navigation
 - **⚡ Fast Boot** - Optimized disk I/O with LBA support
 - **🔄 Chainloading** - Boot Windows, Linux, and other operating systems
 - **💾 Multi-Partition Support** - Handles FAT12/16/32, NTFS, ext2/3/4, and more
@@ -283,4 +284,5 @@ The authors are not responsible for any data loss or system damage.
 ---
 
 **Made with ❤️ by the HIVE Project**
+# HiveBootLoader
 # HiveBootLoader
