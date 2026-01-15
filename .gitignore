@@ -1,0 +1,35 @@
+# Build directory
+build/
+*.bin
+*.img
+*.iso
+
+# Editor files
+*.swp
+*.swo
+*~
+.*.swp
+.*.swo
+
+# IDE files
+.vscode/
+.idea/
+*.code-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Backup files
+*.bak
+*.backup
+*_backup
+mbr_backup.bin
+
+# Logs
+*.log
+
+# Test files
+test/
+test_*.img

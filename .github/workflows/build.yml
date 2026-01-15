@@ -1,0 +1,63 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y nasm make qemu-system-x86
+    
+    - name: Build bootloader
+      run: make
+    
+    - name: Check sizes
+      run: make size
+    
+    - name: Verify Stage 1 size
+      run: |
+        SIZE=$(wc -c < build/stage1.bin)
+        if [ $SIZE -ne 512 ]; then
+          echo "Error: Stage 1 must be exactly 512 bytes, got $SIZE"
+          exit 1
+        fi
+        echo "✓ Stage 1 size correct: 512 bytes"
+    
+    - name: Verify boot signature
+      run: |
+        SIG=$(xxd -p -s 510 -l 2 build/stage1.bin)
+        if [ "$SIG" != "55aa" ]; then
+          echo "Error: Missing boot signature"
+          exit 1
+        fi
+        echo "✓ Boot signature correct: 0x55AA"
+    
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: hive-bootloader
+        path: |
+          build/hive.img
+          build/stage1.bin
+          build/stage2.bin
+    
+    - name: Create release (on tag)
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          build/hive.img
+          README.md
+          INSTALL.md
+          LICENSE
